@@ -1,18 +1,20 @@
 import axios from 'axios';
+import { URLSearchParams } from 'url';
 import logger from './logger.js';
-import { URLSearchParams } from 'url';;
 
 const log = logger.instance();
 
 /**
- * Creates a Call Events Report subscription for the configured account keys.
+ * Creates a Call Events Report subscription for the configured account keys and event types.
+ * Subscribes to 'REPORT_SUMMARY' events if not provided.
  */
-async function createSubscription(channelId) {
+async function createSubscription(channelId, eventTypes = ['REPORT_SUMMARY']) {
     log.debug(`Creating subscription for channel ${channelId}`);
 
     var subscription = {
         channelId: channelId,
-        accountKeys: [ process.env.ACCOUNT_KEY.trim() ]
+        accountKeys: [ process.env.ACCOUNT_KEY.trim() ],
+        eventTypes: eventTypes
     };
 
     return axios.request({
@@ -29,13 +31,17 @@ async function createSubscription(channelId) {
 
 /**
  * Delete a Call Events Report subscription.
+ * The deletion can optionally be filtered on a certain subset of event type.
  */
-async function deleteSubscription(channelId) {
+async function deleteSubscription(channelId, eventType = null) {
     log.debug(`Deleting all subscriptions bound to channel ${channelId}`);
 
     const parameters = new URLSearchParams();
     parameters.append('channelId', channelId);
     parameters.append('accountKey', process.env.ACCOUNT_KEY.trim());
+    if (eventType) {
+        parameters.append('eventType', eventType);
+    }
 
     return axios.request({
         method: 'DELETE',

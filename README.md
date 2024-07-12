@@ -7,7 +7,16 @@ This demo is meant to be used along with our [Call Events Report](https://develo
 
 
 ## How to run this demo
-You will need create a `.env` configuration file with the following content
+
+### Prerequisites
+
+#### OAuth Client
+
+You will need an OAuth client for the app (refer to the [OAuth Clients documentation](https://developer.goto.com/guides/Authentication/04_HOW_accessTokenNodeJS/) to create one) with a redirect URI set to: `http://127.0.0.1:12021/app/redirect`
+
+#### Environment variables
+
+You will need to create a `.env` configuration file with the following content:
 
 ```
 OAUTH_CLIENT_ID=<your_client_id>
@@ -16,7 +25,9 @@ ACCOUNT_KEY=<your_acount_key>
 LOG_LEVEL=info # or debug
 ```
 
-It can then be started by running:
+### Running the app
+
+The app can then be started by running:
 
 * `npm install` (only once)
 * `node app` or `npm start`
