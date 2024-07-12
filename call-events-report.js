@@ -6,9 +6,9 @@ const log = logger.instance();
 
 /**
  * Creates a Call Events Report subscription for the configured account keys and event types.
- * Subscribes to 'REPORT-SUMMARY' events if not provided.
+ * Subscribes to 'REPORT_SUMMARY' events if not provided.
  */
-async function createSubscription(channelId, eventTypes = ['REPORT-SUMMARY']) {
+async function createSubscription(channelId, eventTypes = ['REPORT_SUMMARY']) {
     log.debug(`Creating subscription for channel ${channelId}`);
 
     var subscription = {
